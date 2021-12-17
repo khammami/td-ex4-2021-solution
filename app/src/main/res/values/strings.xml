@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">School List</string>
+
+    <string name="school_name_placeholder">School Name</string>
+    <string name="school_description_placeholder">School Description</string>
+
+    <string name="enetcom_name">ENET\'COM</string>
+    <string name="enetcom_description">École nationale d\'électronique et des télécommunications de Sfax</string>
+    <string name="enib_name">ENIB</string>
+    <string name="enib_description">École nationale d\'ingénieurs de Bizerte</string>
+    <string name="enig_name">ENIG</string>
+    <string name="enig_description">École nationale d\'ingénieurs de Gabès</string>
+    <string name="enim_name">ENIM</string>
+    <string name="enim_description">École nationale d\'ingénieurs de Monastir</string>
+    <string name="enis_name">ENIS</string>
+    <string name="enis_description">École nationale d\'ingénieurs de Sfax</string>
+    <string name="eniso_name">ENISO</string>
+    <string name="eniso_description">École nationale d\'ingénieurs de Sousse</string>
+    <string name="enit_name">ENIT</string>
+    <string name="enit_description">École nationale d\'ingénieurs de Tunis</string>
+    <string name="ensi_name">ENSI</string>
+    <string name="ensi_description">École nationale des sciences de l\'informatique</string>
+    <string name="ept_name">EPT</string>
+    <string name="ept_description">École polytechnique de Tunisie</string>
+    <string name="isi_name">ISI</string>
+    <string name="isi_description">Institut supérieur d\'informatique</string>
+    <string name="issatso_name">ISSATSO</string>
+    <string name="issatso_description">Institut supérieur des sciences appliquées et de technologie de Sousse</string>
+    <string name="supcom_name">SUP\'COM</string>
+    <string name="supcom_description">École supérieure des communications de Tunis</string>
+
+    <string name="reload_menu_action">Reload</string>
+    <string name="delete_all_menu_action">Delete All</string>
+    <string name="delete_all_data_message">Deleting all data…</string>
+    <string name="reload_data_message">Reloading data…</string>
+</resources>
