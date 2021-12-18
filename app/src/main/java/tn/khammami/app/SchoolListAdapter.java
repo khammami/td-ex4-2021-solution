@@ -31,7 +31,9 @@ public class SchoolListAdapter extends RecyclerView.Adapter<SchoolViewHolder> {
 
         holder.name.setText(mSchool.getName());
         holder.description.setText(mSchool.getDescription());
-        Picasso.get().load(mSchool.getLogo()).into(holder.logo);
+        if (mSchool.getLogo() != null && !mSchool.getLogo().isEmpty()) {
+            Picasso.get().load(mSchool.getLogo()).into(holder.logo);
+        }
 
         holder.setAdapterClickListener(schoolClickListener);
     }

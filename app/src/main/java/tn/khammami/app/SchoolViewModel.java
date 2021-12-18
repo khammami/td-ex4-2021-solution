@@ -31,4 +31,16 @@ public class SchoolViewModel extends AndroidViewModel {
     public void deleteAll() {
         mRepository.deleteAll();
     }
+
+    public void insert(School school) {
+        mRepository.insert(school);
+    }
+
+    public void deleteSchoolById(int id) {
+        mRepository.deleteSchoolById(id);
+    }
+
+    public void update(School school) {
+        mRepository.update(school);
+    }
 }

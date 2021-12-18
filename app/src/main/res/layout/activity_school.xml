@@ -14,19 +14,21 @@
         app:srcCompat="@drawable/ic_baseline_school_24"
         android:layout_margin="8dp"/>
 
-    <TextView
+    <EditText
         android:id="@+id/school_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/school_name_placeholder"
+        android:hint="@string/school_name_placeholder"
         android:padding="16dp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:background="@null"/>
 
-    <TextView
+    <EditText
         android:id="@+id/school_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/school_description_placeholder"
+        android:hint="@string/school_description_placeholder"
         android:padding="16dp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:background="@null"/>
 </LinearLayout>

@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -13,7 +14,16 @@ import java.util.List;
 public interface SchoolDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(School school);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertList(List<School> school);
+
+    @Delete
+    void deleteSchool(School school);
+
+    @Query("DELETE FROM school_table WHERE id = :schoolId")
+    void deleteSchoolById(int schoolId);
 
     @Query("DELETE FROM school_table")
     void deleteAll();
@@ -23,4 +33,7 @@ public interface SchoolDao {
 
     @Query("SELECT * from school_table ORDER BY name ASC")
     LiveData<List<School>> getAllSchools();
+
+    @Update
+    void update(School... school);
 }

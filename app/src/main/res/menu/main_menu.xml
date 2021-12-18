@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/reload"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:title="@string/reload_menu_action" />
 
     <item android:id="@+id/delete_all"

@@ -33,4 +33,10 @@
     <string name="delete_all_menu_action">Delete All</string>
     <string name="delete_all_data_message">Deleting all data…</string>
     <string name="reload_data_message">Reloading data…</string>
+
+    <string name="unable_to_update">Unable to update the school</string>
+    <string name="empty_not_saved">School not saved because it is empty.</string>
+    <string name="save_menu_action">Save</string>
+    <string name="delete_menu_action">Delete</string>
+    <string name="new_school_title">Add a School</string>
 </resources>

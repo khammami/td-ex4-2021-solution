@@ -2,12 +2,15 @@ package tn.khammami.app;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "school_table")
 public class School {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @NonNull
     private String name;
     private String description;
@@ -17,6 +20,22 @@ public class School {
         this.name = name;
         this.description = description;
         this.logo = logo;
+    }
+
+    @Ignore
+    public School(int id, @NonNull String name, String description, String logo) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.logo = logo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @NonNull
