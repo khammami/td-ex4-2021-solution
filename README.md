@@ -1,9 +1,8 @@
-# TD Exercise 4
+# TD Exercise 4 - Solution
 
 ## Aperçu
 
-//TODO change screenshot
-<img src="assets/screenshot_school_list_app.png" width="320"/>
+<img src="assets/screenshot_school_list_app_1.png" width="320"/>
 
 "**`School List`**" est une application Android qui affiche une liste des écoles d'ingénieurs.
 
@@ -21,4 +20,4 @@ La liste des écoles est incomplète et pour la compléter on doit modifier notr
   - "`Delete`": pour la suppression ou l'annulation d'ajout de l'école actuelle.
 - Le button de navigation Android "`Back`" assure le retour à l'activité principale, l'annulation de création d'une école dans le cas de l'ajout ou l'annulation des changements en cas de modification dans l'activité "`School Activity`".
 
-//TODO ADD a screenshot for SchoolActivity
+<img src="assets/screenshot_school_list_app_2.png" width="320"/>
