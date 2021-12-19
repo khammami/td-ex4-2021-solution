@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.squareup.picasso.Picasso;
 
@@ -33,7 +35,8 @@ public class SchoolActivity extends AppCompatActivity {
 
     private int mId = -1;
 
-    String schoolLogo;
+    private SchoolActivityViewModel mViewModel;
+    private School mSchool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,25 +51,26 @@ public class SchoolActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.new_school_title);
         }
 
+        mViewModel = new ViewModelProvider(this).get(SchoolActivityViewModel.class);
+
         Bundle extras = getIntent().getExtras();
+
+        // If we are passed content, fill it in for the user to edit.
         if (extras != null) {
             mId = extras.getInt(SCHOOL_ID_KEY, -1);
-            String schoolName = extras.getString(SCHOOL_NAME_KEY, "");
-            String schoolDescription = extras.getString(SCHOOL_DESCRIPTION_KEY, "");
-            schoolLogo = extras.getString(SCHOOL_LOGO_KEY, "");
+        }
 
-            if (!schoolName.isEmpty()) {
-                schoolNameEditText.setText(schoolName);
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(schoolName);
+        if (mId == -1){
+            mSchool = new School();
+            updateUI(mSchool);
+        }else {
+            mViewModel.getSchoolById(mId).observe(this, new Observer<School>() {
+                @Override
+                public void onChanged(School school) {
+                    mSchool = school;
+                    updateUI(school);
                 }
-            }
-            if (!schoolDescription.isEmpty()) {
-                schoolDescriptionEditText.setText(schoolDescription);
-            }
-            if (!schoolLogo.isEmpty()) {
-                Picasso.get().load(schoolLogo).into(schoolLogoImageView);
-            }
+            });
         }
 
         schoolLogoImageView.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +82,23 @@ public class SchoolActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select a Logo"), PICK_IMAGE_REQUEST_CODE);
             }
         });
+    }
+
+    private void updateUI(School school) {
+        if (school != null) {
+            if (school.getName() != null && !school.getName().isEmpty()) {
+                schoolNameEditText.setText(school.getName());
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(school.getName());
+                }
+            }
+            if (school.getDescription() != null && !school.getDescription().isEmpty()) {
+                schoolDescriptionEditText.setText(school.getDescription());
+            }
+            if (school.getLogo() != null && !school.getLogo().isEmpty()) {
+                Picasso.get().load(school.getLogo()).into(schoolLogoImageView);
+            }
+        }
     }
 
     @Override
@@ -92,7 +113,6 @@ public class SchoolActivity extends AppCompatActivity {
 
 
         if (id == R.id.save) {
-            // Create a new Intent for the reply.
             Intent replyIntent = new Intent();
             if (TextUtils.isEmpty(schoolNameEditText.getText()) &&
                     TextUtils.isEmpty(schoolDescriptionEditText.getText())) {
@@ -100,13 +120,14 @@ public class SchoolActivity extends AppCompatActivity {
                 setResult(RESULT_CANCELED, replyIntent);
             } else {
                 // Get the new post that the user entered.
-                String schoolName = schoolNameEditText.getText().toString();
-                String schoolDesc = schoolDescriptionEditText.getText().toString();
-                // Put the new post in the extras for the reply Intent.
-                replyIntent.putExtra(SCHOOL_NAME_KEY, schoolName);
-                replyIntent.putExtra(SCHOOL_DESCRIPTION_KEY, schoolDesc);
-                replyIntent.putExtra(SCHOOL_LOGO_KEY, schoolLogo);
-                replyIntent.putExtra(SCHOOL_ID_KEY, mId);
+                mSchool.setName(schoolNameEditText.getText().toString());
+                mSchool.setDescription(schoolDescriptionEditText.getText().toString());
+
+                if (mId == -1 ){
+                    mViewModel.insert(mSchool);
+                }else {
+                    mViewModel.update(mSchool);
+                }
                 // Set the result status to indicate success.
                 setResult(RESULT_OK, replyIntent);
             }
@@ -115,10 +136,9 @@ public class SchoolActivity extends AppCompatActivity {
         }
 
         if (id == R.id.delete){
-            Intent replyIntent = new Intent();
-            replyIntent.putExtra(SCHOOL_ID_KEY, mId);
-            replyIntent.putExtra(SCHOOL_DELETE_ACTION_KEY, true);
-            setResult(RESULT_CANCELED, replyIntent);
+            if (mId != -1){
+                mViewModel.delete(mSchool);
+            }
             finish();
             return true;
         }
@@ -134,8 +154,8 @@ public class SchoolActivity extends AppCompatActivity {
             if (data != null){
                 Uri logoUri = data.getData();
                 Log.d("image data", data.getData().toString());
-                Picasso.get().load(logoUri).into(schoolLogoImageView);
-                schoolLogo = logoUri.toString();
+                mSchool.setLogo(logoUri.toString());
+                updateUI(mSchool);
             }
 
         }

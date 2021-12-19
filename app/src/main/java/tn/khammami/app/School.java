@@ -11,10 +11,12 @@ public class School {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @NonNull
     private String name;
     private String description;
     private String logo;
+
+    @Ignore
+    public School(){}
 
     public School(@NonNull String name, String description, String logo) {
         this.name = name;
@@ -38,12 +40,11 @@ public class School {
         this.id = id;
     }
 
-    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(@NonNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

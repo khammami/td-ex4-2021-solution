@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -22,9 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final int NEW_SCHOOL_ACTIVITY_REQUEST_CODE = 1;
-    public static final int UPDATE_SCHOOL_ACTIVITY_REQUEST_CODE = 2;
 
     private List<School> mSchools = new ArrayList<>();
     private SchoolListAdapter mSchoolListAdapter;
@@ -51,15 +47,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getApplicationContext(), SchoolActivity.class);
-
                 School mSchool = mSchools.get(position);
-
                 intent.putExtra(SchoolActivity.SCHOOL_ID_KEY, mSchool.getId());
-                intent.putExtra(SchoolActivity.SCHOOL_NAME_KEY, mSchool.getName());
-                intent.putExtra(SchoolActivity.SCHOOL_DESCRIPTION_KEY, mSchool.getDescription());
-                intent.putExtra(SchoolActivity.SCHOOL_LOGO_KEY, mSchool.getLogo());
-
-                startActivityForResult(intent, UPDATE_SCHOOL_ACTIVITY_REQUEST_CODE);
+                startActivity(intent);
             }
         });
 
@@ -76,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SchoolActivity.class);
-                startActivityForResult(intent, NEW_SCHOOL_ACTIVITY_REQUEST_CODE);
+                startActivity(intent);
             }
         });
     }
@@ -100,52 +90,5 @@ public class MainActivity extends AppCompatActivity {
             mSchoolViewModel.reloadData();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == NEW_SCHOOL_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            if (data != null) {
-                School newSchool = getSchoolFromIntent(data);
-
-                mSchoolViewModel.insert(newSchool);
-            }
-        } else if (requestCode == UPDATE_SCHOOL_ACTIVITY_REQUEST_CODE
-                && resultCode == RESULT_OK) {
-            if (data != null) {
-                int id = data.getIntExtra(SchoolActivity.SCHOOL_ID_KEY, -1);
-
-                if (id != -1) {
-                    mSchoolViewModel.update(getSchoolFromIntent(data));
-                } else {
-                    Toast.makeText(this, R.string.unable_to_update,
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        } else if (resultCode == RESULT_CANCELED){
-            if (data != null) {
-                boolean isDeleteAction = data.getBooleanExtra(
-                        SchoolActivity.SCHOOL_DELETE_ACTION_KEY, false);
-                if (isDeleteAction){
-                    int mId = data.getIntExtra(SchoolActivity.SCHOOL_ID_KEY, -1);
-                    if (mId != -1){
-                        mSchoolViewModel.deleteSchoolById(mId);
-                    }
-                }
-            }
-        }
-    }
-
-    @NonNull
-    private School getSchoolFromIntent(@NonNull Intent data) {
-        String mName = data.getStringExtra(SchoolActivity.SCHOOL_NAME_KEY);
-        String mDesc = data.getStringExtra(SchoolActivity.SCHOOL_DESCRIPTION_KEY);
-        String mLogo = data.getStringExtra(SchoolActivity.SCHOOL_LOGO_KEY);
-        int mId = data.getIntExtra(SchoolActivity.SCHOOL_ID_KEY, -1);
-
-        if (mId != -1) return new School(mId, mName, mDesc, mLogo);
-        else return new School(mName,mDesc,mLogo);
     }
 }

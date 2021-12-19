@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.net.URL;
 import java.util.List;
 
-@Database(entities = {School.class}, version = 2, exportSchema = false)
+@Database(entities = {School.class}, version = 3, exportSchema = false)
 public abstract class SchoolRoomDatabase extends RoomDatabase {
 
     public abstract SchoolDao schoolDao();

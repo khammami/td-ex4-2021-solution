@@ -22,6 +22,10 @@ public class SchoolRepository {
         return mAllSchools;
     }
 
+    LiveData<School> getSchoolById(int id){
+        return mSchoolDao.getSchoolById(id);
+    }
+
     public void deleteAll() {
         new deleteAllSchoolsAsyncTask(mSchoolDao).execute();
     }

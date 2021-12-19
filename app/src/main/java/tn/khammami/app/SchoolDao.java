@@ -36,4 +36,7 @@ public interface SchoolDao {
 
     @Update
     void update(School... school);
+
+    @Query("SELECT * from school_table WHERE id = :id")
+    LiveData<School> getSchoolById(int id);
 }
